@@ -288,4 +288,12 @@ It is built to reflect the quality expected from a strong candidate in a **softw
 
 ---
 
+Some shots:
+
+<img width="1918" height="924" alt="Screenshot 2026-04-17 174936" src="https://github.com/user-attachments/assets/fb243239-9f4f-4144-9469-3e5c8ba0ba79" />
+
+
+<img width="1919" height="916" alt="image" src="https://github.com/user-attachments/assets/9dd5950a-5fc5-408e-b4bd-40b6c1fe4760" />
+
+
 
