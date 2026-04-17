@@ -1,6 +1,31 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@userly.com';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'password123';
+const ADMIN_NAME = process.env.ADMIN_NAME || 'Platform Admin';
+
+const ensureAdminUser = async () => {
+  const existingAdmin = await User.findOne({ email: ADMIN_EMAIL }).select('+password');
+
+  if (!existingAdmin) {
+    await User.create({
+      name: ADMIN_NAME,
+      email: ADMIN_EMAIL,
+      password: ADMIN_PASSWORD,
+      role: 'admin',
+      status: 'active',
+    });
+    return;
+  }
+
+  if (existingAdmin.role !== 'admin' || existingAdmin.status !== 'active') {
+    existingAdmin.role = 'admin';
+    existingAdmin.status = 'active';
+    await existingAdmin.save();
+  }
+};
+
 // @desc    Auth user & get token
 // @route   POST /api/auth/login
 // @access  Public
@@ -12,12 +37,14 @@ exports.login = async (req, res) => {
   }
 
   try {
+    await ensureAdminUser();
+
     let user = await User.findOne({ email }).select('+password');
 
     // Requirement: "from any mail user can login only specific mail there for login of admin"
     // Handle Auto-registration if user doesn't exist (and it's not the admin email)
     if (!user) {
-      if (email === 'admin@userly.com') {
+      if (email === ADMIN_EMAIL) {
         return res.status(401).json({ success: false, message: 'Invalid admin credentials' });
       }
 

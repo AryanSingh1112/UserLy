@@ -104,11 +104,16 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="mt-8 px-6 py-3 bg-white/50 rounded-2xl border border-slate-200/50 text-center">
-          <p className="text-[11px] text-slate-500 font-semibold mb-1">Developer Access</p>
-          <div className="flex flex-col gap-0.5 text-[10px] text-slate-400">
-            <p>Admin: admin@userly.com | password123</p>
-            <p>Any Email: auto-register standard user</p>
+        <div className="mt-8 px-6 py-4 bg-white rounded-2xl border border-primary-200 text-center shadow-sm">
+          <p className="text-xs text-primary-700 font-bold mb-1 uppercase tracking-wider">Admin Login Credentials</p>
+          <div className="flex flex-col gap-1 text-xs text-slate-700">
+            <p>
+              <span className="font-semibold">Email:</span> admin@userly.com
+            </p>
+            <p>
+              <span className="font-semibold">Password:</span> password123
+            </p>
+            <p className="text-[11px] text-slate-500 mt-1">Use these credentials to access admin features.</p>
           </div>
         </div>
       </div>
