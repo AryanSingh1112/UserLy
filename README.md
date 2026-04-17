@@ -1,3 +1,4 @@
+<img width="1536" height="1024" alt="ChatGPT Image Apr 17, 2026, 03_50_31 PM" src="https://github.com/user-attachments/assets/dc82f5a4-d557-4191-9685-e2b117cfea18" />
 
 
 # 📚 Table of Contents
@@ -286,7 +287,4 @@ It is built to reflect the quality expected from a strong candidate in a **softw
 
 ---
 
-If you want, I can next:
 
-* 🔥 convert this into **resume bullet points (very high impact)**
-* 🚀 or give **GitHub badges + project banner** to make it look even more premium
