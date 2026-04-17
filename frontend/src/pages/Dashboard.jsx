@@ -14,18 +14,22 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAvatarUrl } from '../utils/avatar';
 
-const StatCard = ({ title, value, subtitle, icon: Icon, color }) => (
-  <div className="card p-6 flex flex-col justify-between gap-4">
-    <div>
-      <p className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-2">{title}</p>
-      <h3 className="text-3xl font-bold text-slate-900">{value}</h3>
-      {subtitle && <p className="text-sm text-slate-500 mt-2">{subtitle}</p>}
+const StatCard = ({ title, value, subtitle, icon, color }) => {
+  const IconComponent = icon;
+
+  return (
+    <div className="card p-6 flex flex-col justify-between gap-4">
+      <div>
+        <p className="text-sm font-medium text-slate-500 uppercase tracking-wider mb-2">{title}</p>
+        <h3 className="text-3xl font-bold text-slate-900">{value}</h3>
+        {subtitle && <p className="text-sm text-slate-500 mt-2">{subtitle}</p>}
+      </div>
+      <div className={`self-end p-3 rounded-2xl ${color} shadow-sm`}>
+        <IconComponent className="w-6 h-6 text-white" />
+      </div>
     </div>
-    <div className={`self-end p-3 rounded-2xl ${color} shadow-sm`}>
-      <Icon className="w-6 h-6 text-white" />
-    </div>
-  </div>
-);
+  );
+};
 
 const MetricBar = ({ label, value, percentage, color }) => (
   <div>

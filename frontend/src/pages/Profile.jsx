@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import toast from 'react-hot-toast';
@@ -9,18 +9,13 @@ import {
   KeyRound, 
   User, 
   Mail, 
-  Info,
-  ShieldCheck,
-  Calendar,
-  Clock
+  ShieldCheck
 } from 'lucide-react';
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
 
-  const [formData, setFormData] = useState({
-    name: user?.name || '',
-  });
+  const [formData, setFormData] = useState({ name: '' });
 
   const [passwordData, setPasswordData] = useState({
     password: '',
@@ -29,20 +24,15 @@ const Profile = () => {
 
   const [isUpdating, setIsUpdating] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      setFormData({ name: user.name || '' });
-    }
-  }, [user]);
-
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     setIsUpdating(true);
     try {
-      const { data } = await api.patch('/users/me', formData);
+      const payload = { name: formData.name || user?.name || '' };
+      const { data } = await api.patch('/users/me', payload);
       updateUser({ ...user, ...data.data });
       toast.success('Profile updated');
-    } catch (error) {
+    } catch {
       toast.error('Failed to update profile');
     } finally {
       setIsUpdating(false);
@@ -59,7 +49,7 @@ const Profile = () => {
       await api.patch('/users/me', { password: passwordData.password });
       toast.success('Password updated');
       setPasswordData({ password: '', confirmPassword: '' });
-    } catch (error) {
+    } catch {
       toast.error('Failed to update password');
     } finally {
       setIsUpdating(false);
@@ -120,7 +110,7 @@ const Profile = () => {
                     <input 
                       type="text" 
                       className="input-field pl-10" 
-                      value={formData.name}
+                      value={formData.name || user?.name || ''}
                       onChange={(e) => setFormData({ name: e.target.value })}
                     />
                   </div>

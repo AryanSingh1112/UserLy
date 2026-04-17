@@ -1,10 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 import { 
-  Users, 
   Search, 
-  Filter, 
-  MoreVertical, 
   Eye, 
   Edit, 
   UserMinus, 
@@ -41,22 +38,23 @@ const UserManagement = () => {
     password: ''
   });
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
       const { data } = await api.get(`/users?page=${page}&search=${search}&role=${roleFilter}&status=${statusFilter}`);
       setUsers(data.data.users);
       setTotalPages(data.data.pages);
-    } catch (error) {
+    } catch {
       toast.error('Failed to fetch users');
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, roleFilter, search, statusFilter]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchUsers();
-  }, [page, search, roleFilter, statusFilter]);
+  }, [fetchUsers]);
 
   const handleOpenModal = (user = null) => {
     if (user) {
@@ -106,7 +104,7 @@ const UserManagement = () => {
         await api.delete(`/users/${id}`);
         toast.success('User deactivated');
         fetchUsers();
-      } catch (error) {
+      } catch {
         toast.error('Deactivation failed');
       }
     }
@@ -117,7 +115,7 @@ const UserManagement = () => {
       const { data } = await api.get(`/users/${id}`);
       setSelectedUser(data.data);
       setIsDetailDrawerOpen(true);
-    } catch (error) {
+    } catch {
       toast.error('Failed to get user details');
     }
   };
